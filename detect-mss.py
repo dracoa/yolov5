@@ -34,10 +34,11 @@ def detect(save_img=False):
     # Part of the screen to capture
     monitor = {"top": 40, "left": 0, "width": 800, "height": 640}
     with mss.mss() as sct:
-        im0s = np.array(sct.grab(monitor))[:, :, :3]
-        filename = sct.shot()
-        # TODO - what's the different between np.array(sct.grab(monitor)) & cv2.imread(filename)
-        im0s = cv2.imread(filename)
+        sc = sct.grab(monitor) # BGRA
+        im0s = np.array(sc)[:, :, :3]
+        im0s = cv2.cvtColor(im0s, cv2.COLOR_BGRA2BGR)
+
+        cv2.rectangle(im0s, (10, 10), (50, 50), (255, 0, 0), thickness=3, lineType=cv2.LINE_AA)
 
         img = letterbox(im0s, new_shape=imgsz)[0]  # resize image (keep ratio)
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
