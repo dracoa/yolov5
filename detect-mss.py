@@ -1,11 +1,10 @@
-import argparse
-
 import mss
 import numpy as np
 import cv2
 import torch
 import time
 import torchvision
+
 
 def letterbox(img, new_shape=(416, 416), color=(114, 114, 114), auto=True, scaleFill=False, scaleup=True):
     # Resize image to a 32-pixel-multiple rectangle https://github.com/ultralytics/yolov3/issues/232
